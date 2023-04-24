@@ -1,0 +1,13 @@
+#! /bin/sh
+echo "testing $0.."
+set -e
+
+. test/common
+
+# Check that debug output works with minimal output. This is still much
+# more than desirable.
+
+RESULT="Error printing enabled by default due to use of output options besides --exists, --atleast/exact/max-version or --list-all. Value of --silence-errors: 0
+Error printing enabled
+$PACKAGE_VERSION"
+run_test --debug --version

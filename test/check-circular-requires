@@ -1,0 +1,8 @@
+#! /bin/sh
+echo "testing $0.."
+set -e
+
+. test/common
+
+RESULT="-lcirc1 -lcirc2 -lcirc3"
+run_test --libs circular-1
