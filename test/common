@@ -1,0 +1,22 @@
+PACKAGE_VERSION=0.30.0
+
+unset PKG_CONFIG_PATH
+PKG_CONFIG_LIBDIR=test
+export PKG_CONFIG_LIBDIR
+export LC_ALL=C
+
+run_test () {
+  set +e
+  out/pkg-config "$@" >/dev/null 2>&1
+  R=$?
+  if [ "$R" -ne "${EXPECT_RETURN:-0}" ]; then
+  	out/pkg-config --print-errors "$@"
+	  echo "/out/pkg-config $@ exited with $R (expected ${EXPECT_RETURN:-0})" 1>&2
+  fi
+
+  R=$(out/pkg-config "$@" 2>&1 | sed -e 's,^[[:space:]]*,,' -e 's,[[:space:]]*$,,')
+  if [ "$R" != "$RESULT" ]; then
+  	echo "out/pkg-config $@ :"
+	  echo "'$R' != '$RESULT'"
+  fi
+}
